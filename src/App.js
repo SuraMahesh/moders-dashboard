@@ -7,10 +7,12 @@ import { NavBar, Sidebar, } from './components';
 import { Calender, Customers, ColorMapping, Editor, Employees, Ecommerce, Orders, TaskList, Stacked,
    Line, Bar, Pie, Area, Pyramid, Financial, ColorPicker } from './pages';
 
+import { useStateContext } from './contexts/ContextProvide';   
+
 
 const App = () => {
 
-  const activeMenu = true;
+  const { activeMenu } = useStateContext();
   return (
     <div>
       <BrowserRouter>
