@@ -7,14 +7,19 @@ import { links } from '../data/dummy.js'
 import { useStateContext } from '../contexts/ContextProvide.js';
 
 const Sidebar = () => {
-    const { activeMenu, setActiveMenu } = useStateContext();
+    const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+    const handleCloseSideBar = () => {
+        if(activeMenu && screenSize <= 900) {
+            setActiveMenu(false)
+        }
+    }
 
     const activeLink = 'flex items-center gap-2 pl-3 pt-2 pb-2 rounded-lg text-white text-md m-2';
     const normalLink = 'flex items-center gap-2 pl-3 pt-2 pb-2 rounded-lg text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray text-md m-2'
   return (
     <div className='ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10'>
         {activeMenu && <>
-        <div className='flex justify-between items-center'><Link to='/' className='flex ml-3 mt-3 dark:text-white items-center gap-2 font-bold text-slate-900' onClick={() => {setActiveMenu(false)}}><SiShopware />Store</Link>
+        <div className='flex justify-between items-center'><Link to='/' className='flex ml-3 mt-3 dark:text-white items-center gap-2 font-bold text-slate-900' onClick={handleCloseSideBar}><SiShopware />Store</Link>
         <TooltipComponent content="Menu" position="BottomCenter">
             <button type='button' className='text-xl p-3 mt-3 rounded-full md:hidden block hover:bg-light-gray' onClick={() => {setActiveMenu((prevActiveMenu) => !prevActiveMenu)}}>
                 <MdOutlineCancel />
@@ -30,7 +35,7 @@ const Sidebar = () => {
                     {item.links.map((link) => (
                         <NavLink to={`/${link.name}`}
                         key={link.name}
-                        onClick={() => {}}
+                        onClick={handleCloseSideBar}
                         className={({ isActive }) => 
                         isActive ? activeLink : normalLink}>
                             {link.icon}
